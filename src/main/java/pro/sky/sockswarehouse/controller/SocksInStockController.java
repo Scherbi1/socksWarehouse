@@ -36,25 +36,8 @@ public class SocksInStockController {
     public ResponseEntity<Collection<SocksInStock>> getAllStudent() {
         return ResponseEntity.ok(socksInStockService.findStocksInStockAll());
     }
-    @Operation(summary = "Попуступление абсолютно новых носков. Под них прям обязательно новую запись нужно создать, вот прям обязательно",
-            responses = {@ApiResponse(
-                    responseCode = "200",
-                    description = "Носки получены на склад",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = SocksInStock.class)
-                    )
-            ), @ApiResponse(
-                    responseCode = "500",
-                    description = "НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!!",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE)
-            )}
-    )
-    @PostMapping("/create")
-    public SocksInStock createStock(@RequestBody SocksInStock socksInStock) {
-        return socksInStockService.create(socksInStock);
-    }
+
+
     @Operation(summary = "Добавление носков на склад",
             responses = {@ApiResponse(
                     responseCode = "200",
@@ -65,7 +48,7 @@ public class SocksInStockController {
                     )
             ), @ApiResponse(
                     responseCode = "500",
-                    description = "НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!!",
+                    description = "Неправильно введены входные данные!",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
@@ -84,7 +67,7 @@ public class SocksInStockController {
                     )
             ), @ApiResponse(
                     responseCode = "500",
-                    description = "НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!!",
+                    description = "Неправильно введены входные данные!",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
@@ -104,7 +87,7 @@ public class SocksInStockController {
                     )
             ), @ApiResponse(
                     responseCode = "500",
-                    description = "НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!!",
+                    description = "Неправильно введены входные данные!",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
@@ -124,7 +107,7 @@ public class SocksInStockController {
                     )
             ), @ApiResponse(
                     responseCode = "500",
-                    description = "НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!! ВВЕДИТЕ '<', '>' или '=' ",
+                    description = "Неправильно введены входные данные! Введите '<', '>' или '=' ",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
@@ -135,7 +118,7 @@ public class SocksInStockController {
                                                                @RequestParam int cottonPart) {
         return socksInStockService.getQuantityByCottonPartAndByColor(color, operation, cottonPart);
     }
-    @Operation(summary = "Партия носков оказалась бракованной, пришлось выкинуть",
+    @Operation(summary = "Удаление партии носков",
             responses = {@ApiResponse(
                     responseCode = "200",
                     description = "Носки выброшены на помойку",

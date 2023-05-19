@@ -28,20 +28,14 @@ public class SocksInStockService {
 
     Logger logger = LoggerFactory.getLogger(SocksInStockService.class);
 
-    public SocksInStock create(SocksInStock socksInStock) {
-        logger.info("Dog Shelter Was invoked method for createIncomeSocks");
-        if (socksInStock.getCottonPart() > 100 || socksInStock.getCottonPart() < 0
-                || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ");
-        }
-        return socksInStockRepositories.save(socksInStock);
-    }
+
     public ResponseEntity<?> createIncomeSocks (SocksInStock socksInStock) {
         logger.info("Dog Shelter Was invoked method for createIncomeSocks ");
-        if (socksInStock.getCottonPart() > 100 || socksInStock.getCottonPart() < 0
+        if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ");
+            throw new RuntimeException("Неправильно введены входные данные!");
         }
+
         List<SocksInStock> socksList = (List<SocksInStock>) socksInStockRepositories.findByColorAndCottonPart(socksInStock.getColor(), socksInStock.getCottonPart());
         if (socksList.isEmpty()) {
             return new ResponseEntity<>("Носки не найдены на складе", HttpStatus.BAD_REQUEST);
@@ -53,9 +47,9 @@ public class SocksInStockService {
     }
     public ResponseEntity<?> createOutcomeSocks(SocksInStock socksInStock) {
         logger.info("Dog Shelter Was invoked method for createOutcomeSocks");
-        if (socksInStock.getCottonPart() > 100 || socksInStock.getCottonPart() < 0
+        if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ");
+            throw new RuntimeException("Неправильно введены входные данные!");
         }
         List<SocksInStock> socksList = (List<SocksInStock>) socksInStockRepositories.findByColorAndCottonPart(socksInStock.getColor(), socksInStock.getCottonPart());
         if (socksList.isEmpty()) {
@@ -68,7 +62,8 @@ public class SocksInStockService {
         }
         foundSocks.setQuantity(quantity);
         if (foundSocks.getQuantity() == 0) {
-            socksInStockRepositories.delete(foundSocks);
+          socksInStockRepositories.delete(foundSocks);
+            return ResponseEntity.ok("Носки кончились на скалде и запись о них была удалена ");
         }
 
         return  ResponseEntity.ok(socksInStockRepositories.save(foundSocks));
@@ -81,9 +76,9 @@ public class SocksInStockService {
 
     public SocksInStock editSocks(SocksInStock socksInStock) {
         logger.info("Dog Shelter Was invoked method for editSocks");
-        if (socksInStock.getCottonPart() > 100 || socksInStock.getCottonPart() < 0
+        if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ");
+            throw new RuntimeException("Неправильно введены входные данные!");
         }
         return socksInStockRepositories.save(socksInStock);
     }
@@ -105,7 +100,7 @@ public class SocksInStockService {
                             (socksInStockRepositories.findByColorAndCottonPart(color, cottonPart)
                                     .stream().mapToInt(SocksInStock::getQuantity).sum()), HttpStatus.OK);
 
-            default: throw new RuntimeException("НЕПРАВИЛЬНО ЗАПИСАНЫ ВХОДНЫЕ ДАННЫЕ!!! ВВЕДИТЕ '<', '>' или '=' ");
+            default: throw new RuntimeException("Неправильно введены входные данные! Введите '<', '>' или '=' ");
         }
     }
 
