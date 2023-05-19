@@ -14,7 +14,7 @@ import pro.sky.sockswarehouse.service.SocksInStockService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/socksWarehouse")
+@RequestMapping("/sockswarehouse")
 public class SocksInStockController {
 
     private final SocksInStockService socksInStockService;
@@ -32,7 +32,7 @@ public class SocksInStockController {
                     )
             )}
     )
-    @GetMapping("/getAll")
+    @GetMapping("/getall")
     public ResponseEntity<Collection<SocksInStock>> getAllStudent() {
         return ResponseEntity.ok(socksInStockService.findStocksInStockAll());
     }
@@ -53,7 +53,7 @@ public class SocksInStockController {
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
     )
-    @PostMapping("/Income")
+    @PostMapping("/income")
     public ResponseEntity<?>сreateIncomeSocksInStocks(@RequestBody SocksInStock socksInStock) {
         return socksInStockService.createIncomeSocks(socksInStock);
     }
@@ -72,7 +72,7 @@ public class SocksInStockController {
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
             )}
     )
-     @PostMapping("/OutCome")
+     @PostMapping("/outcome")
     public ResponseEntity<?> сreateOutcomeSocksInStocks(@RequestBody SocksInStock socksInStock) {
         return socksInStockService.createOutcomeSocks(socksInStock);
     }

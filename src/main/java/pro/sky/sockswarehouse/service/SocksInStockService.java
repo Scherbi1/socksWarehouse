@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pro.sky.sockswarehouse.exception.SocksIncorrectlyWrittenInputData;
 import pro.sky.sockswarehouse.model.SocksInStock;
 import pro.sky.sockswarehouse.repositories.SocksInStockRepositories;
 
@@ -33,7 +34,7 @@ public class SocksInStockService {
         logger.info("Dog Shelter Was invoked method for createIncomeSocks ");
         if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("Неправильно введены входные данные!");
+            throw new SocksIncorrectlyWrittenInputData();
         }
 
         List<SocksInStock> socksList = (List<SocksInStock>) socksInStockRepositories.findByColorAndCottonPart(socksInStock.getColor(), socksInStock.getCottonPart());
@@ -49,7 +50,7 @@ public class SocksInStockService {
         logger.info("Dog Shelter Was invoked method for createOutcomeSocks");
         if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("Неправильно введены входные данные!");
+            throw new SocksIncorrectlyWrittenInputData();
         }
         List<SocksInStock> socksList = (List<SocksInStock>) socksInStockRepositories.findByColorAndCottonPart(socksInStock.getColor(), socksInStock.getCottonPart());
         if (socksList.isEmpty()) {
@@ -78,7 +79,7 @@ public class SocksInStockService {
         logger.info("Dog Shelter Was invoked method for editSocks");
         if (socksInStock.getCottonPart() < 0 || socksInStock.getCottonPart() > 100
                 || socksInStock.getColor()== null  || socksInStock.getQuantity()<1) {
-            throw new RuntimeException("Неправильно введены входные данные!");
+            throw new SocksIncorrectlyWrittenInputData();
         }
         return socksInStockRepositories.save(socksInStock);
     }
